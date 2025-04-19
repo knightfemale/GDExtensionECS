@@ -1,0 +1,5 @@
+.sconsign.dblite
+src/*.obj
+demo/bin/*.dll
+demo/bin/*.exp
+demo/bin/*.lib

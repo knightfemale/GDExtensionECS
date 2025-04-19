@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2a22iwhcok28"]
+
+[ext_resource type="Script" uid="uid://bgiiipnxnooee" path="res://CPP_ECS/mian.gd" id="1_ri18n"]
+[ext_resource type="PackedScene" uid="uid://bhmx5fxq6t5go" path="res://CPP_ECS/SystemManager.tscn" id="2_g41y4"]
+
+[node name="Mian" type="Node"]
+script = ExtResource("1_ri18n")
+
+[node name="SystemManager" parent="." instance=ExtResource("2_g41y4")]

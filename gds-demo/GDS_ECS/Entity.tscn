@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://0vqx8lmghqkk"]
+
+[ext_resource type="Script" uid="uid://dydu7neiy8xcc" path="res://GDS_ECS/ECS/entity.gd" id="1_74n68"]
+
+[node name="Entity" type="Node"]
+script = ExtResource("1_74n68")
+metadata/_custom_type_script = "uid://dydu7neiy8xcc"

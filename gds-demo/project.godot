@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="Demo"
-run/main_scene="uid://d2a22iwhcok28"
+config/name="GDS-Demo"
+run/main_scene="uid://crqyvac7tnupy"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

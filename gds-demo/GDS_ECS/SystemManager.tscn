@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://k2fhdrdmqh3l"]
+
+[ext_resource type="Script" uid="uid://3fj4lvma60t7" path="res://GDS_ECS/ECS/system_manager.gd" id="1_uwhs2"]
+[ext_resource type="Script" uid="uid://ykpq1geol7n5" path="res://GDS_ECS/RandomMotionSystem.gd" id="2_lha0u"]
+
+[node name="SystemManager" type="Node"]
+script = ExtResource("1_uwhs2")
+metadata/_custom_type_script = "uid://3fj4lvma60t7"
+
+[node name="RandomMotionSystem" type="Node" parent="."]
+script = ExtResource("2_lha0u")
+metadata/_custom_type_script = "uid://ykpq1geol7n5"

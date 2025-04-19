@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://do5lb7q2aoowd"]
+
+[ext_resource type="Script" uid="uid://cygl3ds1e07wb" path="res://GDS_ECS/main.gd" id="1_8ytln"]
+[ext_resource type="PackedScene" uid="uid://k2fhdrdmqh3l" path="res://GDS_ECS/SystemManager.tscn" id="2_8ytln"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_8ytln")
+
+[node name="SystemManager" parent="." instance=ExtResource("2_8ytln")]

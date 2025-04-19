@@ -1,4 +1,7 @@
 [submodule "godot-cpp"]
 	path = godot-cpp
-	url = https://gh.llkk.cc/https://github.com/godotengine/godot-cpp
+	url = https://github.com/godotengine/godot-cpp
 	branch = 4.4
+[submodule "thirdparty/entt"]
+	path = thirdparty/entt
+	url = https://github.com/skypjack/entt.git
