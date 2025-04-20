@@ -20,7 +20,6 @@ namespace godot {
         void _ready() override;
         void register_component(Node* component);
         void unregister_component(Node* component);
-        void _on_child_added(Node* node);
         Node* get_component(const String& component_name) const;
         Array get_components(const String& component_name) const;
         bool meets_requirements(const Array& requirements) const;

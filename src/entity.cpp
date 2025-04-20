@@ -42,12 +42,6 @@ void Entity::unregister_component(Node* component) {
     components.erase(component);
 }
 
-void Entity::_on_child_added(Node* node) {
-    if (ECS::is_component(node)) {
-        node->set("component_name", node->get("component_name"));
-    }
-}
-
 Node* Entity::get_component(const String& component_name) const {
     for (int i = 0; i < components.size(); ++i) {
         Node* component = Object::cast_to<Node>(components[i]);
