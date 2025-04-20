@@ -3,9 +3,6 @@
 #include <godot_cpp/godot.hpp>
 
 #include "register_types.h"
-#include "ecs.h"
-#include "entity.h"
-#include "system.h"
 #include "system_manager.h"
 
 using namespace godot;

@@ -3,7 +3,6 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include "system_manager.h"
-#include "ecs.h"
 
 using namespace godot;
 
@@ -23,7 +22,7 @@ void SystemManager::_ready() {
 
     systems = get_systems();
 
-    Array entities = tree->get_nodes_in_group("entity");
+    Array entities = tree->get_nodes_in_group("Entity");
     for (int i = 0; i < entities.size(); ++i) {
         update_component_groups(Object::cast_to<Node>(entities[i]));
     }
@@ -32,7 +31,9 @@ void SystemManager::_ready() {
     for (int i = 0; i < children.size(); ++i) {
         Node* child = Object::cast_to<Node>(children[i]);
         if (ECS::is_system(child)) {
-            register_requirements(child->get("requirements"));
+            System* system = Object::cast_to<System>(child);
+            system->precompute_requirements();
+            register_requirements(system->get_requirements());
             if (child->has_method("_system_ready")) {
                 child->call("_system_ready");
             }
@@ -44,10 +45,8 @@ void SystemManager::_process(double delta) {
     for (int i = 0; i < systems.size(); ++i) {
         Node* system = Object::cast_to<Node>(systems[i]);
         if (system->has_method("_system_process")) {
-            Array args;
-            args.append(query_entities(system));
-            args.append(delta);
-            system->callv("_system_process", args);
+            Array entities = query_entities(system);
+            system->call("_system_process", entities, delta);
         }
     }
 }
@@ -56,10 +55,8 @@ void SystemManager::_physics_process(double delta) {
     for (int i = 0; i < systems.size(); ++i) {
         Node* system = Object::cast_to<Node>(systems[i]);
         if (system->has_method("_system_physics_process")) {
-            Array args;
-            args.append(query_entities(system));
-            args.append(delta);
-            system->callv("_system_physics_process", args);
+            Array entities = query_entities(system);
+            system->call("_system_physics_process", entities, delta);
         }
     }
 }
@@ -99,10 +96,7 @@ Array SystemManager::get_systems() {
     for (int i = 0; i < children.size(); ++i) {
         Node* child = Object::cast_to<Node>(children[i]);
         if (ECS::is_system(child)) {
-            if (Engine::get_singleton()->is_editor_hint()) {
-                result.append(child);
-            }
-            else if (validate_system(child)) {
+            if (validate_system(child)) {
                 result.append(child);
             }
         }
@@ -128,31 +122,69 @@ bool SystemManager::validate_system(Node* system) {
 }
 
 Array SystemManager::query_entities(Node* system) {
-    Array requirements = system->get("requirements");
-    requirements.sort();
-    return component_groups.get(requirements, Array());
+    System* sys = Object::cast_to<System>(system);
+    uint64_t require = sys->require_mask;
+    uint64_t exclude = sys->exclude_mask;
+
+    for (int i = 0; i < component_groups.size(); ++i) {
+        ComponentGroup* group = component_groups[i];
+        if (group->require_mask == require && group->exclude_mask == exclude) {
+            return group->entities;
+        }
+    }
+    return Array();
 }
 
 void SystemManager::register_requirements(const Array& requirements) {
-    Array sorted_req = requirements.duplicate();
-    sorted_req.sort();
-    if (!component_groups.has(sorted_req)) {
-        component_groups[sorted_req] = Array();
+    uint64_t require_mask = 0;
+    uint64_t exclude_mask = 0;
+
+    for (int i = 0; i < requirements.size(); ++i) {
+        String req = requirements[i];
+        if (req.begins_with("!")) {
+            String name = req.substr(1);
+            exclude_mask |= ECS::get_component_bit(name);
+        }
+        else {
+            require_mask |= ECS::get_component_bit(req);
+        }
+    }
+
+    bool exists = false;
+    for (ComponentGroup* group : component_groups) {
+        if (group->require_mask == require_mask && group->exclude_mask == exclude_mask) {
+            exists = true;
+            break;
+        }
+    }
+
+    if (!exists) {
+        ComponentGroup* new_group = new ComponentGroup();
+        new_group->require_mask = require_mask;
+        new_group->exclude_mask = exclude_mask;
+        new_group->entities = Array();
+        component_groups.push_back(new_group);
     }
 }
 
 void SystemManager::update_component_groups(Node* entity) {
-    Array keys = component_groups.keys();
-    for (int i = 0; i < keys.size(); ++i) {
-        Array req = keys[i];
-        Array entities = component_groups[req];
-        bool meets = entity->call("meets_requirements", req);
-        if (meets && !entities.has(entity)) {
-            entities.append(entity);
+    uint64_t entity_mask = Object::cast_to<Entity>(entity)->get_component_bitmask();
+
+    for (ComponentGroup* group : component_groups) {
+        bool matches = (entity_mask & group->require_mask) == group->require_mask && (entity_mask & group->exclude_mask) == 0;
+
+        if (matches && !group->entities.has(entity)) {
+            group->entities.append(entity);
         }
-        else if (!meets) {
-            entities.erase(entity);
+        else if (!matches) {
+            group->entities.erase(entity);
         }
-        component_groups[req] = entities;
     }
+}
+
+SystemManager::~SystemManager() {
+    for (ComponentGroup* group : component_groups) {
+        delete group;
+    }
+    component_groups.clear();
 }

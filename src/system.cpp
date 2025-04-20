@@ -1,5 +1,6 @@
-#include "system.h"
 #include <godot_cpp/classes/wrapped.hpp>
+
+#include "system.h"
 
 using namespace godot;
 
@@ -19,6 +20,21 @@ void System::_bind_methods() {
 }
 
 bool System::_system_init(SystemManager* _system_manager) {
-    system_manager = system_manager;
+    system_manager = _system_manager;
+    precompute_requirements();
     return true;
+}
+
+void System::precompute_requirements() {
+    Array reqs = get_requirements();
+    for (int i = 0; i < reqs.size(); ++i) {
+        String req = reqs[i];
+        if (req.begins_with("!")) {
+            String name = req.substr(1);
+            exclude_mask |= ECS::get_component_bit(name);
+        }
+        else {
+            require_mask |= ECS::get_component_bit(req);
+        }
+    }
 }

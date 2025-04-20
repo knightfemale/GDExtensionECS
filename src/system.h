@@ -6,7 +6,6 @@
 #include <godot_cpp/core/gdvirtual.gen.inc>
 #include <godot_cpp/classes/node.hpp>
 
-
 #include "system_manager.h"
 
 namespace godot {
@@ -21,10 +20,14 @@ namespace godot {
         SystemManager* system_manager;
         Array requirements;
 
+
     protected:
         static void _bind_methods();
 
     public:
+        uint64_t require_mask = 0;
+        uint64_t exclude_mask = 0;
+
         bool _system_init(SystemManager* system_manager);
 
         GDVIRTUAL0(_system_ready);
@@ -38,6 +41,8 @@ namespace godot {
 
         void set_requirements(const Array& req) { requirements = req; }
         Array get_requirements() const { return requirements; }
+
+        void precompute_requirements();
     };
 
 }

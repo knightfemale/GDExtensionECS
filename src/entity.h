@@ -3,12 +3,15 @@
 
 #include <godot_cpp/classes/node.hpp>
 
+#include "ecs.h"
+
 namespace godot {
 
     class Entity : public Node {
         GDCLASS(Entity, Node)
 
     private:
+        uint64_t component_bitmask = 0;
         Array components;
 
     protected:
@@ -22,7 +25,7 @@ namespace godot {
         void unregister_component(Node* component);
         Node* get_component(const String& component_name) const;
         Array get_components(const String& component_name) const;
-        bool meets_requirements(const Array& requirements) const;
+        uint64_t get_component_bitmask() const { return component_bitmask; }
     };
 
 }
