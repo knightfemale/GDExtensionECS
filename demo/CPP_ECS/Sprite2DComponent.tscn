@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmgq262jjtuic"]
-
-[ext_resource type="Texture2D" uid="uid://crywhd68wkn00" path="res://icon.svg" id="1_2rvyc"]
-[ext_resource type="Script" uid="uid://cl4es3jaftw3s" path="res://CPP_ECS/Sprite2DComponent.gd" id="2_xka3k"]
-
-[node name="Sprite2DComponent" type="Sprite2D"]
-texture = ExtResource("1_2rvyc")
-script = ExtResource("2_xka3k")

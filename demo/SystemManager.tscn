@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://yxnawhlh5vei"]
+
+[ext_resource type="Script" uid="uid://dxvkhk04chjbu" path="res://ECS/system/HungerSystem.gd" id="1_foxln"]
+[ext_resource type="Script" uid="uid://b4pfvdqh7qyb6" path="res://ECS/system/ProducerReproductionSystem.gd" id="3_6lutl"]
+[ext_resource type="Script" uid="uid://bfbq6mkwo7erh" path="res://ECS/system/AnimalAISystem.gd" id="4_3he7d"]
+[ext_resource type="Script" uid="uid://dwi4iplftu1uy" path="res://ECS/system/ConsumerReproductionSystem.gd" id="4_yxhv1"]
+
+[node name="SystemManager" type="SystemManager"]
+
+[node name="HungerSystem" type="System" parent="."]
+script = ExtResource("1_foxln")
+metadata/_custom_type_script = "uid://dxvkhk04chjbu"
+
+[node name="AnimalAISystem" type="System" parent="."]
+script = ExtResource("4_3he7d")
+metadata/_custom_type_script = "uid://bfbq6mkwo7erh"
+
+[node name="ProducerReproductionSystem" type="System" parent="."]
+script = ExtResource("3_6lutl")
+metadata/_custom_type_script = "uid://b4pfvdqh7qyb6"
+
+[node name="ConsumerReproductionSystem" type="System" parent="."]
+script = ExtResource("4_yxhv1")
+metadata/_custom_type_script = "uid://dwi4iplftu1uy"

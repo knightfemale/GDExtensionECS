@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhmx5fxq6t5go"]
-
-[ext_resource type="Script" uid="uid://bp4cnxi258gke" path="res://CPP_ECS/RandomMotionSystem.gd" id="2_lha0u"]
-
-[node name="SystemManager" type="SystemManager"]
-
-[node name="RandomMotionSystem" type="System" parent="."]
-script = ExtResource("2_lha0u")
-metadata/_custom_type_script = "uid://bp4cnxi258gke"
