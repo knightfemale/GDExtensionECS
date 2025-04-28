@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddqsin37vh2ya"]
+
+[ext_resource type="Script" uid="uid://df1hj5ff0wqs0" path="res://TestComponent.gd" id="1_nw2kf"]
+
+[node name="TestEntity" type="EnttEntity"]
+
+[node name="EnttComponent" type="EnttComponent" parent="."]
+
+[node name="TestComponent" type="EnttComponent" parent="."]
+script = ExtResource("1_nw2kf")
+metadata/_custom_type_script = "uid://df1hj5ff0wqs0"

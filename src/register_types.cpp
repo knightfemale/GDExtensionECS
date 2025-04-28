@@ -3,7 +3,7 @@
 #include <godot_cpp/godot.hpp>
 
 #include "register_types.h"
-#include "system_manager.h"
+#include "entt_component.h"
 
 using namespace godot;
 
@@ -12,10 +12,8 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_class<ECS>();
-	ClassDB::register_class<Entity>();
-	ClassDB::register_class<System>();
-	ClassDB::register_class<SystemManager>();
+	ClassDB::register_class<EnttEntity>();
+	ClassDB::register_class<EnttComponent>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

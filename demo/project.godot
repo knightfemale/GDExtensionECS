@@ -11,16 +11,6 @@ config_version=5
 [application]
 
 config/name="Demo"
-run/main_scene="uid://btbunt3cqp348"
+run/main_scene="uid://vuyfqv7ckhoe"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
-
-[display]
-
-window/size/viewport_width=1920
-window/size/viewport_height=1080
-window/vsync/vsync_mode=0
-
-[editor_plugins]
-
-enabled=PackedStringArray()

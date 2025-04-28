@@ -13,7 +13,13 @@ env = SConscript("godot-cpp/SConstruct")
 # - LINKFLAGS are for linking flags
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
-env.Append(CPPPATH=["src/", "#thirdparty/entt/src"])
+env.Append(CPPPATH=["src/", "thirdparty/entt/src/"])
+
+if env["platform"] == "windows":
+    env.Append(CXXFLAGS="/std:c++17")  # MSVC需要这个标志
+else:
+    env.Append(CXXFLAGS="-std=c++17")  # GCC/Clang需要这个标志
+
 sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
