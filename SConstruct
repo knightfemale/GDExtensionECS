@@ -14,13 +14,16 @@ env = SConscript("godot-cpp/SConstruct")
 
 # tweak this if you want to use different folders, or more folders, to store your source code in.
 env.Append(CPPPATH=["src/", "thirdparty/entt/src/"])
+sources = Glob("src/*.cpp")
+
+if env["target"] in ["editor", "template_debug"]:
+    doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
+    sources.append(doc_data)
 
 if env["platform"] == "windows":
     env.Append(CXXFLAGS="/std:c++17")  # MSVC需要这个标志
 else:
     env.Append(CXXFLAGS="-std=c++17")  # GCC/Clang需要这个标志
-
-sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
     library = env.SharedLibrary(
