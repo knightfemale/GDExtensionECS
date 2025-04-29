@@ -11,17 +11,20 @@ namespace godot {
     class EnttComponent : public Node {
         GDCLASS(EnttComponent, Node);
 
+    private:
+        entt::entity entity;
+        
     protected:
         static void _bind_methods();
 
-    private:
-        String component_name = "EnttComponent";
-
     public:
-        void set_component_name(const String& p_name);
-        String get_component_name() const;
+        EnttComponent();
+        ~EnttComponent();
 
+        String component_name = "EnttComponent";
         void _ready() override;
+        void set_component_name(const String& _component_name);
+        String get_component_name() const;
     };
 
 }

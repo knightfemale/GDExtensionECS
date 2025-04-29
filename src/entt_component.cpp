@@ -1,5 +1,3 @@
-#include <godot_cpp/variant/utility_functions.hpp>
-
 #include "entt_component.h"
 
 using namespace godot;
@@ -12,25 +10,42 @@ void EnttComponent::_bind_methods() {
 
 void EnttComponent::_ready() {
     auto parent = get_parent();
+    
     if (parent->is_class("EnttEntity")) {
         EnttEntity* entity_node = Object::cast_to<EnttEntity>(parent);
-        if (entity_node) {
-            uint64_t eid = entity_node->get_entity_id();
-            entt::entity eid_entt = static_cast<entt::entity>(eid);
-
-            EnttEntity::registry.emplace<EnttComponent*>(eid_entt, this);
-            EnttEntity::registry.emplace<String>(eid_entt, component_name);
-
-            UtilityFunctions::print("[EnttComponent] Attached ", component_name, " to Entity ID: ", eid);
-        }
+        entity = entity_node->get_entity();
+        EnttEntity::registry.emplace<EnttComponent*>(entity, this);
+#ifndef DEBUG_DISABLED
+        UtilityFunctions::print("[EnttComponent] Attached ", component_name, " to Entity ID: ", static_cast<uint32_t>(entity));
+#endif
     }
     else {
+#ifndef DEBUG_DISABLED
         UtilityFunctions::print("[EnttComponent] Warning: Must be child of EnttEntity");
+#endif
+    }
+}
+EnttComponent::EnttComponent() {
+    //
+}
+
+EnttComponent::~EnttComponent() {
+    if (entity != entt::null) {
+        // ´ÓEnTTÒÆ³ý×é¼þ
+        EnttEntity::registry.remove<EnttComponent*>(entity);
+#ifndef DEBUG_DISABLED
+        UtilityFunctions::print("[EnttComponent] Removed ", component_name, " from Entity ID: ", static_cast<uint32_t>(entity));
+#endif
+    }
+    else {
+#ifndef DEBUG_DISABLED
+        UtilityFunctions::print("[EnttComponent] Warning: Must be child of EnttEntity");
+#endif
     }
 }
 
-void EnttComponent::set_component_name(const String& p_name) {
-    component_name = p_name;
+void EnttComponent::set_component_name(const String& _component_name) {
+    component_name = _component_name;
 }
 
 String EnttComponent::get_component_name() const {

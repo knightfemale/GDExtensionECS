@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddqsin37vh2ya"]
+[gd_scene load_steps=2 format=3 uid="uid://6xfvw5d7s4cm"]
 
-[ext_resource type="Script" uid="uid://df1hj5ff0wqs0" path="res://TestComponent.gd" id="1_nw2kf"]
+[ext_resource type="Script" uid="uid://df1hj5ff0wqs0" path="res://TEST/TestComponent.gd" id="1_nw2kf"]
 
 [node name="TestEntity" type="EnttEntity"]
 
