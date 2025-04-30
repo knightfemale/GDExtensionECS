@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://vuyfqv7ckhoe"]
+[gd_scene load_steps=3 format=3 uid="uid://vuyfqv7ckhoe"]
 
 [ext_resource type="Script" uid="uid://xo2e7gjgnesf" path="res://TEST/main.gd" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://dj4hkajpxtr8d" path="res://TEST/SystemManager.tscn" id="2_hry11"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ig7tw")
+
+[node name="SystemManager" parent="." instance=ExtResource("2_hry11")]

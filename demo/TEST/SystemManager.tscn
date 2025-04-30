@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dj4hkajpxtr8d"]
+
+[ext_resource type="Script" uid="uid://c7up4f70asxe4" path="res://TEST/TestSystem.gd" id="1_lx08m"]
+
+[node name="SystemManager" type="GdeSystemManager"]
+
+[node name="TestSystem" type="GdeSystem" parent="."]
+script = ExtResource("1_lx08m")
+metadata/_custom_type_script = "uid://c7up4f70asxe4"

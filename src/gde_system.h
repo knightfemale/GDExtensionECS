@@ -17,15 +17,15 @@ namespace godot {
         static void _bind_methods();
 
     public:
-        String system_name = "GdeSystem";
-        void set_system_name(const String& name);
-        String get_system_name() const;
+        // 需要的组件
         Array requirements;
         void set_requirements(const Array& req);
         Array get_requirements() const;
 
-        GDVIRTUAL2(_system_process, Array, double);
-        GDVIRTUAL2(_system_physics_process, Array, double);
+        // 虚函数, 每帧调用
+        GDVIRTUAL2(_system_process, Dictionary, double);
+        // 虚函数, 每物理帧调用
+        GDVIRTUAL2(_system_physics_process, Dictionary, double);
     };
 
 }
