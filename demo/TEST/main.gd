@@ -12,9 +12,6 @@ func _ready() -> void:
 	add_child(entt_entity)
 	add_child(entt_entity2)
 	
-	entt_entity.pr()
-	entt_entity2.pr()
-	
 	entt_component.queue_free()
 	entt_entity.queue_free()
 	entt_entity2.queue_free()

@@ -3,7 +3,8 @@
 #include <godot_cpp/godot.hpp>
 
 #include "register_types.h"
-#include "entt_component.h"
+#include "gde_component.h"
+#include "gde_system.h"
 
 using namespace godot;
 
@@ -12,8 +13,9 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_class<EnttEntity>();
-	ClassDB::register_class<EnttComponent>();
+	ClassDB::register_class<GdeEntity>();
+	ClassDB::register_class<GdeComponent>();
+	ClassDB::register_class<GdeSystem>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

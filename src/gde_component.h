@@ -1,0 +1,29 @@
+#ifndef GDE_COMPONENT_H
+#define GDE_COMPONENT_H
+
+#include <godot_cpp/classes/node.hpp>
+
+#include "gde_entity.h"
+
+namespace godot {
+
+    class GdeComponent : public Node {
+        GDCLASS(GdeComponent, Node);
+        
+    protected:
+        static void _bind_methods();
+
+    public:
+        GdeComponent();
+        ~GdeComponent();
+
+        String component_name = "GdeComponent";
+        void set_component_name(const String& _component_name);
+        String get_component_name() const;
+
+        void _ready() override;
+    };
+
+}
+
+#endif
