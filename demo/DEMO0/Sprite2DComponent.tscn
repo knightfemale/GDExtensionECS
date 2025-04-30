@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://btbj6qy5vflnb"]
+
+[ext_resource type="Script" uid="uid://d156mskofcgb3" path="res://DEMO0/sprite_2d_component.gd" id="1_wnwvk"]
+[ext_resource type="Texture2D" uid="uid://b1fp5nsqkolk" path="res://icon.svg" id="2_lr3v0"]
+
+[node name="Sprite2DComponent" type="GdeComponent"]
+script = ExtResource("1_wnwvk")
+metadata/_custom_type_script = "uid://d156mskofcgb3"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_lr3v0")

@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://x7wcogl3ytul"]
+
+[ext_resource type="Script" uid="uid://cnyt387y6piwg" path="res://DEMO0/mian.gd" id="1_k5jan"]
+[ext_resource type="PackedScene" uid="uid://dvtpw7bnuhfin" path="res://DEMO0/SystemManager.tscn" id="2_4becv"]
+
+[node name="Mian" type="Node"]
+script = ExtResource("1_k5jan")
+
+[node name="SystemManager" parent="." instance=ExtResource("2_4becv")]
