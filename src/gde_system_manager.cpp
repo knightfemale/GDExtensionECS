@@ -13,7 +13,7 @@ void GdeSystemManager::_ready() {
 void GdeSystemManager::_process(double delta) {
     for (int i = 0; i < systems.size(); ++i) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
-        if (!system->has_method("_system_physics_process")) continue;
+        if (!system->has_method("_system_process")) continue;
         Dictionary components = get_components_for_system(system);
         if (components.is_empty()) continue;
         system->call("_system_process", components, delta);
