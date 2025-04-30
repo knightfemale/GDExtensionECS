@@ -14,7 +14,7 @@ namespace godot {
         static void _bind_methods();
 
     public:
-        // 需要的组件
+        // 需要的组件, 形如["Component1", "!Component2", ...], 其中 "!Component3" 代表不能有 Component2
         Array requirements;
         void set_requirements(const Array& req);
         Array get_requirements() const;
