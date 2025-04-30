@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://6xfvw5d7s4cm"]
+[gd_scene load_steps=2 format=3 uid="uid://eftkae3ndkfh"]
 
 [ext_resource type="Script" uid="uid://df1hj5ff0wqs0" path="res://TEST/TestComponent.gd" id="1_nw2kf"]
 
-[node name="TestEntity" type="EnttEntity"]
+[node name="TestEntity" type="GdeEntity"]
 
-[node name="EnttComponent" type="EnttComponent" parent="."]
+[node name="EnttComponent" type="GdeComponent" parent="."]
 
-[node name="TestComponent" type="EnttComponent" parent="."]
+[node name="TestComponent" type="GdeComponent" parent="."]
 script = ExtResource("1_nw2kf")
 metadata/_custom_type_script = "uid://df1hj5ff0wqs0"

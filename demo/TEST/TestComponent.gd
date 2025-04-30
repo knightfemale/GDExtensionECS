@@ -1,5 +1,5 @@
 class_name TestComponent
-extends EnttComponent
+extends GdeComponent
 
 
 func _init() -> void:

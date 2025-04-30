@@ -4,3 +4,5 @@
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ig7tw")
+
+[node name="GdeComponent" type="GdeComponent" parent="."]

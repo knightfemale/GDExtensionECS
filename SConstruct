@@ -8,8 +8,8 @@ sources = Glob("src/*.cpp")
 
 # 添加调试模式判断逻辑
 if env["target"] in ["editor", "template_debug"]: # Debug 模式配置
-    # 添加调试宏
-    env.Append(CPPDEFINES=["DEBUG_ENABLED"])
+    # 如果想要在编辑器输出调试信息可以注释
+    #env.Append(CPPDEFINES=["DEBUG_DISABLED"])
     # 禁用所有优化并添加调试符号
     if env["platform"] == "windows":
         env.Append(CFLAGS="/O2", CXXFLAGS="/O2")  # MSVC: /Od=禁用优化, /Zi=调试信息
@@ -19,7 +19,7 @@ if env["target"] in ["editor", "template_debug"]: # Debug 模式配置
     doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
     sources.append(doc_data)
 else: # Release 模式配置
-    # 添加调试宏
+    # 关闭调试
     env.Append(CPPDEFINES=["DEBUG_DISABLED"])
     # 启用优化
     if env["platform"] == "windows":

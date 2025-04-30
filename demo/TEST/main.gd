@@ -2,13 +2,13 @@ extends Node
 
 
 func _ready() -> void:
-	var entt_component = EnttComponent.new()
+	var entt_component = GdeComponent.new()
 	var test_component = load("res://TEST/TestComponent.gd").new()
-	var entt_entity = EnttEntity.new()
-	var entt_entity2 = EnttEntity.new()
+	var entt_entity = GdeEntity.new()
+	var entt_entity2 = GdeEntity.new()
 	
 	entt_entity.add_child(entt_component)
-	entt_entity2.add_child(test_component)
+	entt_entity.add_child(test_component)
 	add_child(entt_entity)
 	add_child(entt_entity2)
 	
