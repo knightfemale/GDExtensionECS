@@ -20,22 +20,27 @@ void GdeComponent::_ready() {
         UtilityFunctions::print("[GdeComponent] Created entity: ", entity->entity_id, " a ", component_name, ". Current components: ", generate_components_list(entity));
 #endif
     }
-    else {
-        // 非实体子节点则自动销毁，防止游离组件
-        this->queue_free();
 #ifndef DEBUG_DISABLED
-        // 调试信息: 提示销毁游离组件
-        UtilityFunctions::print("[GdeComponent] Warning: A component ", component_name, " has been destroyed because it is not a child of entity.");
-#endif
+    else {
+        // 调试信息: 提示组件不是实体的子节点
+        UtilityFunctions::print("[GdeComponent] Warning: A component ", component_name, " is not a child of entity.");
     }
+#endif
 }
 
 void GdeComponent::_exit_tree() {
-    GdeEntity* entity = Object::cast_to<GdeEntity>(get_parent());
-    entity->remove_component(cached_component_name);
+    if (GdeEntity* entity = Object::cast_to<GdeEntity>(get_parent())) {
+        entity->remove_component(cached_component_name);
 #ifndef DEBUG_DISABLED
-    // 调试信息: 打印组件列表
-    UtilityFunctions::print("[GdeComponent] Destroyed entity: ", entity->entity_id, " a ", component_name, ". Current components: ", generate_components_list(entity));
+        // 调试信息: 打印组件列表
+        UtilityFunctions::print("[GdeComponent] Destroyed entity: ", entity->entity_id, " a ", component_name, ". Current components: ", generate_components_list(entity));
+#endif
+    }
+#ifndef DEBUG_DISABLED
+    else {
+        // 调试信息: 提示组件不是实体的子节点
+        UtilityFunctions::print("[GdeComponent] Warning: A component ", component_name, " is not a child of entity.");
+    }
 #endif
 }
 
