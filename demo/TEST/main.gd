@@ -12,7 +12,7 @@ func _ready() -> void:
 	add_child(entity0)
 	add_child(entity1)
 	
-	gde_component.free()
-	entity0.free()
-	entity1.free()
+	#gde_component.free()
+	#entity0.free()
+	#entity1.free()
 	pass
