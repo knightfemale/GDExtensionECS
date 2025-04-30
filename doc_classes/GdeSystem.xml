@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GdeSystem" inherits="Node" version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+    <brief_description>
+        ECS 系统基类，定义组件需求和执行逻辑。
+    </brief_description>
+    <description>
+        系统通过 [code]requirements[/code] 属性筛选实体组件。
+        继承此类并实现 [method _system_process] 或 [method _system_physics_process] 以定义具体逻辑。
+    </description>
+    
+    <methods>
+        <method name="_system_physics_process" qualifiers="virtual">
+            <return type="void" />
+            <param index="0" name="components" type="Dictionary" />
+            <param index="1" name="delta" type="float" />
+            <description>
+                在物理帧更新时被调用。系统会自动筛选符合 [code]requirements[/code] 的实体，
+                将组件实例通过字典参数传入（如 [code]{"SpriteComponent": [SpriteComponent1, SpriteComponent2, ...], "HealthComponent": [HealthComponent1, HealthComponent2, ...], ...}[/code]）。
+                [code]delta[/code] 参数表示自上次物理更新后的时间间隔（单位：秒）。
+            </description>
+        </method>
+
+        <method name="_system_process" qualifiers="virtual">
+            <return type="void" />
+            <param index="0" name="components" type="Dictionary" />
+            <param index="1" name="delta" type="float" />
+            <description>
+                在每帧更新时被调用。系统会自动筛选符合 [code]requirements[/code] 的实体，
+                将组件实例通过字典参数传入（如 [code]{"SpriteComponent": [SpriteComponent1, SpriteComponent2, ...], "HealthComponent": [HealthComponent1, HealthComponent2, ...], ...}[/code]）。
+                [code]delta[/code] 参数表示自上一帧后的时间间隔（单位：秒）。
+            </description>
+        </method>
+
+        <method name="set_requirements">
+            <return type="void" />
+            <param index="0" name="requirements" type="Array" />
+            <description>
+                设置系统的组件需求列表。
+            </description>
+        </method>
+        
+        <method name="get_requirements">
+            <return type="Array" />
+            <description>
+                返回系统的组件需求列表。
+            </description>
+        </method>
+    </methods>
+
+    <members>
+        <member name="requirements" type="Array" setter="set_requirements" getter="get_requirements" default="[]">
+            组件需求列表，格式为 [code]["ComponentA", "!ComponentB"][/code]，表示需要 [code]ComponentA[/code] 且排除 [code]ComponentB[/code]。
+        </member>
+    </members>
+</class>

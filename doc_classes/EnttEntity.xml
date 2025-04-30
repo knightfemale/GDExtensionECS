@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<class name="EnttEntity" inherits="Node" version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
-    <brief_description>
-        EnTT 实体的节点表示，管理组件附加和生命周期。
-    </brief_description>
-    <description>
-        表示一个 EnTT 实体，包含全局注册表 [code]registry[/code]。其子节点应为 [EnttComponent] 类型，组件会自动附加到实体。
-    </description>
-</class>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GdeComponent" inherits="Node" version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+    <brief_description>
+        所有组件的基类，定义组件的名称和基础行为。
+    </brief_description>
+    <description>
+        表示一个 ECS 组件，需作为具体组件的父类。当作为 [GdeEntity] 的子节点时，会自动注册到实体。
+        提供组件名称的属性和生命周期管理（如自动销毁游离组件）。
+    </description>
+    <methods>
+        <method name="set_component_name">
+            <return type="void" />
+            <param index="0" name="name" type="String" />
+            <description>
+                设置组件的名称（内部会自动缓存为 std::string 用于高效查找）。
+            </description>
+        </method>
+        <method name="get_component_name">
+            <return type="String" />
+            <description>
+                返回组件的名称（Godot String 类型）。
+            </description>
+        </method>
+    </methods>
+    <members>
+        <member name="component_name" type="String" setter="set_component_name" getter="get_component_name" default="GdeComponent">
+            组件的名称，例如 [code]"TransformComponent"[/code]。
+        </member>
+    </members>
+</class>

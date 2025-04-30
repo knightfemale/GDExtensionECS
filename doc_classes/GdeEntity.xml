@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GdeEntity" inherits="Node" version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+    <brief_description>
+        ECS 实体节点，管理组件的注册和生命周期。
+    </brief_description>
+    <description>
+        表示一个实体，使用稀疏集 [code]SparseSet[/code] 高效存储组件。
+        子节点应为 [GdeComponent] 类型，组件会自动附加到实体。支持实体 ID 的复用和线程安全的组件操作。
+    </description>
+    <methods>
+        <method name="add_component">
+            <return type="void" />
+            <param index="0" name="component" type="GdeComponent" />
+            <description>
+                将组件注册到实体（线程安全）。
+            </description>
+        </method>
+        <method name="remove_component">
+            <return type="void" />
+            <param index="0" name="component_name" type="String" />
+            <description>
+                根据组件名称注销组件（线程安全）。
+            </description>
+        </method>
+    </methods>
+    <members>
+        <member name="entity_id" type="int" setter="" getter="" default="0">
+            实体的唯一 ID，由系统自动分配。
+        </member>
+    </members>
+</class>
