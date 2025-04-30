@@ -1,5 +1,6 @@
 .sconsign.dblite
-src/*.obj
+*.obj
 demo/bin/*.dll
 demo/bin/*.exp
 demo/bin/*.lib
+*.bat

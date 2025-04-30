@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GdeSystemManager" inherits="Node" version="4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+    <brief_description>
+        系统管理器，协调所有系统的执行。
+    </brief_description>
+    <description>
+        自动收集所有子节点中的 [GdeSystem] 实例，并在每帧或物理帧调用其处理函数。
+        负责根据系统需求筛选实体组件，并以 [Dictionary] 形式传递组件数据。
+    </description>
+    <methods>
+        <method name="get_systems">
+            <return type="Array" />
+            <description>
+                返回所有子节点中注册的 [GdeSystem] 实例。
+            </description>
+        </method>
+    </methods>
+    <members>
+        <member name="systems" type="Array" setter="" getter="get_systems" default="[]">
+            当前管理的所有系统实例。
+        </member>
+    </members>
+</class>
