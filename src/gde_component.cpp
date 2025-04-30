@@ -44,10 +44,14 @@ GdeComponent::~GdeComponent() {
 #ifndef DEBUG_DISABLED
         UtilityFunctions::print("[GDExtensionECS] Warning: Must be child of GdeEntity");
 #endif
+    }
 }
 
 void GdeComponent::set_component_name(const String& _component_name) {
     component_name = _component_name;
+    // »º´æ×ª»»½á¹û
+    CharString cs = _component_name.utf8();
+    cached_component_name = std::string(cs.get_data(), cs.length());
 }
 
 String GdeComponent::get_component_name() const {

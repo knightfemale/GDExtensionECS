@@ -43,10 +43,7 @@ GdeEntity::~GdeEntity() {
 }
 
 void GdeEntity::add_component(GdeComponent* component) {
-    // 将组件名称转换为 std::string 作为键
-    CharString cs = component->get_component_name().utf8();
-    std::string name(cs.get_data(), cs.length());
-    components[name] = component;
+    components[component->cached_component_name] = component;
 }
 
 GdeComponent* GdeEntity::get_component(const String& component_name) const {

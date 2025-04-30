@@ -25,12 +25,12 @@ namespace godot {
 
         // 静态 vector 存储所有实体实例
         static std::vector<GdeEntity*> entities;
-
         // 存储组件的 unordered_map
         std::unordered_map<std::string, GdeComponent*> components;
         // 添加组件到 unordered_map
         void add_component(GdeComponent* component);
-        // 根据名称从 unordered_map 获取组件
+
+        // 暴露函数: 根据名称从 unordered_map 获取组件
         GdeComponent* get_component(const String& component_name) const;
     };
 
