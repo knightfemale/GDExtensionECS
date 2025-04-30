@@ -15,6 +15,7 @@ void GdeSystemManager::_process(double delta) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
         if (!system->has_method("_system_physics_process")) continue;
         Dictionary components = get_components_for_system(system);
+        if (components.is_empty()) continue;
         system->call("_system_process", components, delta);
     }
 }
@@ -24,6 +25,7 @@ void GdeSystemManager::_physics_process(double delta) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
         if (!system->has_method("_system_physics_process")) continue;
         Dictionary components = get_components_for_system(system);
+        if (components.is_empty()) continue;
         system->call("_system_physics_process", components, delta);
     }
 }
