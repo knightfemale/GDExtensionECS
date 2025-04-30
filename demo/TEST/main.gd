@@ -2,17 +2,17 @@ extends Node
 
 
 func _ready() -> void:
-	var entt_component = GdeComponent.new()
+	var gde_component = GdeComponent.new()
 	var test_component = load("res://TEST/TestComponent.gd").new()
-	var entt_entity = GdeEntity.new()
-	var entt_entity2 = GdeEntity.new()
+	var entity0 = GdeEntity.new()
+	var entity1 = GdeEntity.new()
 	
-	entt_entity.add_child(entt_component)
-	entt_entity.add_child(test_component)
-	add_child(entt_entity)
-	add_child(entt_entity2)
+	entity0.add_child(test_component)
+	entity0.add_child(gde_component)
+	add_child(entity0)
+	add_child(entity1)
 	
-	#entt_component.queue_free()
-	#entt_entity.queue_free()
-	#entt_entity2.queue_free()
+	gde_component.free()
+	entity0.free()
+	entity1.free()
 	pass

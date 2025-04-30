@@ -1,4 +1,4 @@
-#include <godot_cpp/classes/wrapped.hpp>
+﻿#include <godot_cpp/classes/wrapped.hpp>
 
 #include "gde_system.h"
 

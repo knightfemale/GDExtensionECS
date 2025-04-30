@@ -1,15 +1,10 @@
-#ifndef GDE_ENTITY_H
+ï»¿#ifndef GDE_ENTITY_H
 #define GDE_ENTITY_H
-
-#include <vector>
-#include <unordered_set>
-#include <unordered_map>
-#include <string>
-#include <algorithm>
-#include <mutex>
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/node.hpp>
+
+#include "gde_sparse_set.h"
 
 namespace godot {
     class GdeComponent;
@@ -24,17 +19,33 @@ namespace godot {
         GdeEntity();
         ~GdeEntity();
 
-        // ÊµÌåÏß³ÌËø
-        static std::mutex entities_mutex;
-        // ¾²Ì¬ vector ´æ´¢ËùÓĞÊµÌåÊµÀı
-        static std::vector<GdeEntity*> entities;
-        // ´æ´¢×é¼şµÄ unordered_map
-        std::unordered_map<std::string, GdeComponent*> components;
-        // Ìí¼Ó×é¼şµ½ unordered_map
-        void add_component(GdeComponent* component);
+        // ä¸‹ä¸€ä¸ªå¯åˆ†é… ID
+        static size_t next_entity_id;
+        // å¯å¤ç”¨çš„ç©ºé—² ID é˜Ÿåˆ—
+        static std::queue<size_t> free_entity_ids;
+        
+       
+        // å®ä½“ ID æ“ä½œçš„äº’æ–¥é”
+        static std::mutex entity_id_mutex;
+        // ç»„ä»¶æ“ä½œçš„äº’æ–¥é”
+        static std::mutex component_mutex;
+        // ç»„ä»¶ç±»å‹æ³¨å†Œè¡¨
+        static std::unordered_map<std::string, int> component_type_ids;
+        // ç»„ä»¶ç¨€ç–é›†å­˜å‚¨
+        static std::vector<SparseSet<GdeComponent*>> component_sparse_sets;
 
-        // ±©Â¶º¯Êı: ¸ù¾İÃû³Æ´Ó unordered_map »ñÈ¡×é¼ş
-        GdeComponent* get_component(const String& component_name) const;
+        // å½“å‰å®ä½“çš„ ID
+        size_t entity_id;
+
+        // å®ä½“æ³¨å†Œç»„ä»¶
+        void add_component(GdeComponent* component);
+        // å®ä½“æ³¨é”€ç»„ä»¶
+        void remove_component(const std::string& component_name);
+
+#ifndef DEBUG_DISABLED
+        // ç”Ÿæˆå®ä½“ ID åˆ—è¡¨çš„è¾…åŠ©å‡½æ•°(å‡å°‘ä»£ç å†—ä½™)
+        String generate_entity_id_list();
+#endif
     };
 
 }

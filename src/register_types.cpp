@@ -3,7 +3,6 @@
 #include <godot_cpp/godot.hpp>
 
 #include "register_types.h"
-#include "gde_component.h"
 #include "gde_system.h"
 
 using namespace godot;

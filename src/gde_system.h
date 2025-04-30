@@ -1,10 +1,12 @@
-#ifndef GDE_SYSTEM_H
+﻿#ifndef GDE_SYSTEM_H
 #define GDE_SYSTEM_H
 
 #include <godot_cpp/classes/wrapped.hpp>
 #include <godot_cpp/core/binder_common.hpp>
 #include <godot_cpp/core/gdvirtual.gen.inc>
 #include <godot_cpp/classes/node.hpp>
+
+#include "gde_component.h"
 
 namespace godot {
 
