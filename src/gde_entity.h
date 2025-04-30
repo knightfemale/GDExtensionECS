@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <string>
 #include <algorithm>
+#include <mutex>
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/node.hpp>
@@ -23,6 +24,8 @@ namespace godot {
         GdeEntity();
         ~GdeEntity();
 
+        // 实体线程锁
+        static std::mutex entities_mutex;
         // 静态 vector 存储所有实体实例
         static std::vector<GdeEntity*> entities;
         // 存储组件的 unordered_map

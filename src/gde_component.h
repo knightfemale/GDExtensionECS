@@ -17,10 +17,10 @@ namespace godot {
         GdeComponent();
         ~GdeComponent();
 
-        String component_name = "GdeComponent";
+        String component_name;
         void set_component_name(const String& _component_name);
         String get_component_name() const;
-        std::string cached_component_name;
+        std::string cached_component_name = "GdeComponent";
 
         void _ready() override;
     };

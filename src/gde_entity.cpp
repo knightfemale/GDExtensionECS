@@ -3,6 +3,7 @@
 
 using namespace godot;
 
+std::mutex GdeEntity::entities_mutex;
 std::vector<GdeEntity*> GdeEntity::entities;
 
 void GdeEntity::_bind_methods() {
@@ -10,6 +11,8 @@ void GdeEntity::_bind_methods() {
 }
 
 GdeEntity::GdeEntity() {
+    // 添加线程锁
+    std::lock_guard<std::mutex> lock(entities_mutex);
     // 构造时将当前实例加入 vector
     entities.push_back(this);
 
@@ -26,6 +29,8 @@ GdeEntity::GdeEntity() {
 }
 
 GdeEntity::~GdeEntity() {
+    // 添加线程锁
+    std::lock_guard<std::mutex> lock(entities_mutex);
     // 析构时从 vector 中移除当前实例
     auto end = std::remove(entities.begin(), entities.end(), this);
     entities.erase(end, entities.end());
