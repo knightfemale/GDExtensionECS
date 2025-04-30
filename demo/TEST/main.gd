@@ -7,7 +7,7 @@ func _ready() -> void:
 	var entity0 = GdeEntity.new()
 	var entity1 = GdeEntity.new()
 	
-	entity0.add_child(test_component)
+	entity1.add_child(test_component)
 	entity0.add_child(gde_component)
 	add_child(entity0)
 	add_child(entity1)
