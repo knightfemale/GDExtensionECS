@@ -11,7 +11,8 @@ std::mutex GdeEntity::entity_id_mutex;
 std::mutex GdeEntity::component_mutex;
 
 void GdeEntity::_bind_methods() {
-    // 预留方法绑定
+    ClassDB::bind_static_method("GdeEntity", D_METHOD("print_entity_id_list"), &GdeEntity::print_entity_id_list);
+    ClassDB::bind_static_method("GdeEntity", D_METHOD("print_components_list", "entity"), &GdeEntity::print_components_list);
 }
 
 GdeEntity::GdeEntity() {
@@ -26,11 +27,6 @@ GdeEntity::GdeEntity() {
         entity_id = free_entity_ids.front();
         free_entity_ids.pop();
     }
-
-#ifndef DEBUG_DISABLED
-    // 调试信息: 打印当前所有活跃实体 ID
-    UtilityFunctions::print("[GdeEntity] Created entity ", entity_id, ". Current entities: ", generate_entity_id_list());
-#endif
 }
 
 GdeEntity::~GdeEntity() {
@@ -41,11 +37,6 @@ GdeEntity::~GdeEntity() {
     for (auto& sparse_set : component_sparse_sets) {
         sparse_set.remove(entity_id);
     }
-
-#ifndef DEBUG_DISABLED
-    // 调试信息: 打印当前所有活跃实体 ID
-    UtilityFunctions::print("[GdeEntity] Destroyed entity ", entity_id, ". Current entities: ", generate_entity_id_list());
-#endif
 }
 
 void GdeEntity::add_component(GdeComponent* component) {
@@ -87,8 +78,9 @@ void GdeEntity::remove_component(const std::string& component_name) {
     }
 }
 
+
+void GdeEntity::print_entity_id_list() {
 #ifndef DEBUG_DISABLED
-String GdeEntity::generate_entity_id_list() {
     std::unordered_set<size_t> free_ids;
     std::queue<size_t> temp_free = free_entity_ids;
     while (!temp_free.empty()) {
@@ -106,6 +98,26 @@ String GdeEntity::generate_entity_id_list() {
         ids_list = ids_list.substr(0, ids_list.length() - 2);
     }
     ids_list += "]";
-    return ids_list;
-}
+
+    UtilityFunctions::print("[GdeEntity] Current entities: ", ids_list);
 #endif
+}
+
+void GdeEntity::print_components_list(GdeEntity* entity) {
+#ifndef DEBUG_DISABLED
+    String components_list = "[";
+    std::lock_guard<std::mutex> lock(GdeEntity::component_mutex);
+    for (const auto& pair : GdeEntity::component_type_ids) {
+        int type_id = pair.second;
+        if (type_id < GdeEntity::component_sparse_sets.size() &&
+            GdeEntity::component_sparse_sets[type_id].get(entity->entity_id)) {
+            components_list += String(pair.first.c_str()) + ", ";
+        }
+    }
+    if (components_list.length() > 1) {
+        components_list = components_list.substr(0, components_list.length() - 2);
+    }
+    components_list += "]";
+    UtilityFunctions::print("[GdeEntity] entity: ", entity->entity_id, " current components: ", components_list);
+#endif
+}

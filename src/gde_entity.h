@@ -2,6 +2,7 @@
 #define GDE_ENTITY_H
 
 #include <godot_cpp/variant/utility_functions.hpp>
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/node.hpp>
 
 #include "gde_sparse_set.h"
@@ -23,8 +24,6 @@ namespace godot {
         static size_t next_entity_id;
         // 可复用的空闲 ID 队列
         static std::queue<size_t> free_entity_ids;
-        
-       
         // 实体 ID 操作的互斥锁
         static std::mutex entity_id_mutex;
         // 组件操作的互斥锁
@@ -41,11 +40,10 @@ namespace godot {
         void add_component(GdeComponent* component);
         // 实体注销组件
         void remove_component(const std::string& component_name);
-
-#ifndef DEBUG_DISABLED
-        // 生成实体 ID 列表的辅助函数(减少代码冗余)
-        String generate_entity_id_list();
-#endif
+        // 打印所有实体 ID
+        static void print_entity_id_list();
+        // 打印某个实体当前的组件
+        static void print_components_list(GdeEntity* entity);
     };
 
 }

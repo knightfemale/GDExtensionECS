@@ -22,6 +22,21 @@
                 根据组件名称注销组件（线程安全）。
             </description>
         </method>
+        <method name="print_components_list" qualifiers="static">
+            <return type="void" />
+            <param index="0" name="entity" type="GdeEntity" />
+            <description>
+                打印指定实体当前附加的所有组件名称列表。
+                输出格式为调试信息，仅在调试模式下生效。
+            </description>
+        </method>
+        <method name="print_entity_id_list" qualifiers="static">
+            <return type="void" />
+            <description>
+                打印当前所有活跃实体 ID 的列表，已回收的实体 ID 不会显示在列表中。
+                输出格式为调试信息，仅在调试模式下生效。
+            </description>
+        </method>
     </methods>
     <members>
         <member name="entity_id" type="int" setter="" getter="" default="0">

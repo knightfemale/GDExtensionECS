@@ -21,11 +21,6 @@ namespace godot {
         String get_component_name() const;
         // 缓存名称(标准字符串, 用于高效查找)
         std::string cached_component_name;
-
-#ifndef DEBUG_DISABLED
-        // 生成组件列表的辅助函数(减少代码冗余)
-        String generate_components_list(GdeEntity* entity);
-#endif
     };
 
 }
