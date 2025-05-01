@@ -18,6 +18,9 @@ namespace godot {
         Array requirements;
         void set_requirements(const Array& req);
         Array get_requirements() const;
+        // 添加缓存字段
+        std::vector<std::string> cached_required;
+        std::vector<std::string> cached_excluded;
 
         // 虚函数, 每帧调用
         GDVIRTUAL2(_system_process, Dictionary, double);

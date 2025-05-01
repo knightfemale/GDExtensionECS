@@ -45,26 +45,9 @@ Array GdeSystemManager::get_systems() {
 Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
     Dictionary components_dict;
 
-    Array reqs = system->get_requirements();
-    // 必须组件列表
-    std::vector<std::string> required;
-    // 排除组件列表
-    std::vector<std::string> excluded;
-
-    // 步骤 1: 分离必须组件和排除组件
-    for (int i = 0; i < reqs.size(); ++i) {
-        String req = reqs[i];
-        if (req.begins_with("!")) {
-            // 处理排除组件: 去掉前缀 "!" 并转换为 std::string
-            CharString cs = req.substr(1).utf8();
-            excluded.push_back(cs.get_data());
-        }
-        else {
-            // 处理必须组件: 直接转换名称
-            CharString cs = req.utf8();
-            required.push_back(cs.get_data());
-        }
-    }
+    // 步骤 1: 直接使用缓存的必须组件和排除组件
+    const std::vector<std::string>& required = system->cached_required;
+    const std::vector<std::string>& excluded = system->cached_excluded;
 
     // 步骤 2: 获取所有活跃实体 ID
     std::unordered_set<size_t> active_entities;
