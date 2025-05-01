@@ -50,21 +50,7 @@ Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
     const std::vector<std::string>& excluded = system->cached_excluded;
 
     // 步骤 2: 获取所有活跃实体 ID
-    std::unordered_set<size_t> active_entities;
-    {
-        std::lock_guard<std::mutex> lock(GdeEntity::entity_id_mutex);
-        std::queue<size_t> temp = GdeEntity::free_entity_ids;
-        std::unordered_set<size_t> free_ids;
-        // 缓存所有空闲 ID 以快速判断活跃实体
-        while (!temp.empty()) {
-            free_ids.insert(temp.front());
-            temp.pop();
-        }
-        // 遍历所有可能的 ID, 筛选出未被回收的实体
-        for (size_t id = 0; id < GdeEntity::next_entity_id; ++id) {
-            if (!free_ids.count(id)) active_entities.insert(id);
-        }
-    }
+    std::unordered_set<size_t>& active_entities = GdeEntity::active_entity_ids;
 
     // 步骤 3: 加锁访问组件数据, 避免并发修改
     std::lock_guard<std::mutex> comp_lock(GdeEntity::component_mutex);

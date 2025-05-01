@@ -4,11 +4,12 @@
 using namespace godot;
 
 size_t GdeEntity::next_entity_id = 0;
-std::unordered_map<std::string, int> GdeEntity::component_type_ids;
-std::vector<SparseSet<GdeComponent*>> GdeEntity::component_sparse_sets;
 std::queue<size_t> GdeEntity::free_entity_ids;
+std::unordered_set<size_t> GdeEntity::active_entity_ids;
 std::mutex GdeEntity::entity_id_mutex;
 std::mutex GdeEntity::component_mutex;
+std::unordered_map<std::string, int> GdeEntity::component_type_ids;
+std::vector<SparseSet<GdeComponent*>> GdeEntity::component_sparse_sets;
 
 void GdeEntity::_bind_methods() {
     ClassDB::bind_static_method("GdeEntity", D_METHOD("print_entity_id_list"), &GdeEntity::print_entity_id_list);
@@ -27,6 +28,7 @@ GdeEntity::GdeEntity() {
         entity_id = free_entity_ids.front();
         free_entity_ids.pop();
     }
+    active_entity_ids.insert(entity_id);
 }
 
 GdeEntity::~GdeEntity() {
@@ -37,6 +39,7 @@ GdeEntity::~GdeEntity() {
     for (auto& sparse_set : component_sparse_sets) {
         sparse_set.remove(entity_id);
     }
+    active_entity_ids.erase(entity_id);
 }
 
 void GdeEntity::add_component(GdeComponent* component) {

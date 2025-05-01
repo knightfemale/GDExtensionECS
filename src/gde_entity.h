@@ -24,6 +24,8 @@ namespace godot {
         static size_t next_entity_id;
         // 可复用的空闲 ID 队列
         static std::queue<size_t> free_entity_ids;
+        // 活跃实体 ID
+        static std::unordered_set<size_t> active_entity_ids;
         // 实体 ID 操作的互斥锁
         static std::mutex entity_id_mutex;
         // 组件操作的互斥锁
