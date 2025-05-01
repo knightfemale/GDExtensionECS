@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3ldheg87483m"]
+
+[ext_resource type="Script" uid="uid://7ufee5alvjdw" path="res://DEMO0-GDS/sprite_2d.gd" id="1_13nu2"]
+
+[node name="Sprite2d" type="Sprite2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_13nu2")

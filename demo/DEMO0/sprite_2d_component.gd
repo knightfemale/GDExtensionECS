@@ -8,4 +8,6 @@ var direction := Vector2.RIGHT
 
 func _init() -> void:
 	component_name = "Sprite2DComponent"
+	var random_angle = randf_range(0, TAU)
+	direction = Vector2(cos(random_angle), sin(random_angle))
 	pass

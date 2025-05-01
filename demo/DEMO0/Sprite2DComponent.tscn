@@ -8,4 +8,5 @@ script = ExtResource("1_wnwvk")
 metadata/_custom_type_script = "uid://d156mskofcgb3"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_lr3v0")
