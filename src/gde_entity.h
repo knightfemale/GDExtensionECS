@@ -42,6 +42,8 @@ namespace godot {
         void add_component(GdeComponent* component);
         // 实体注销组件
         void remove_component(const std::string& component_name);
+        // 获取组件
+        GdeComponent* get_component(const godot::String& component_name) const;
         // 打印所有实体 ID
         static void print_entity_id_list();
         // 打印某个实体当前的组件

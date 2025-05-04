@@ -1,5 +1,6 @@
 ﻿#include "gde_entity.h"
 #include "gde_component.h"
+#include "gde_system_manager.h"
 
 using namespace godot;
 
@@ -12,6 +13,7 @@ std::unordered_map<std::string, int> GdeEntity::component_type_ids;
 std::vector<SparseSet<GdeComponent*>> GdeEntity::component_sparse_sets;
 
 void GdeEntity::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("get_component", "component_name"), &GdeEntity::get_component);
     ClassDB::bind_static_method("GdeEntity", D_METHOD("print_entity_id_list"), &GdeEntity::print_entity_id_list);
     ClassDB::bind_static_method("GdeEntity", D_METHOD("print_components_list", "entity"), &GdeEntity::print_components_list);
 }
@@ -64,6 +66,7 @@ void GdeEntity::add_component(GdeComponent* component) {
     // 稀疏集通过 entity_id 快速定位组件，保证 O(1) 时间复杂度
     int type_id = component_type_ids[name];
     component_sparse_sets[type_id].add(entity_id, component);
+    GdeSystemManager::mark_components_dirty();
 }
 
 void GdeEntity::remove_component(const std::string& component_name) {
@@ -79,8 +82,33 @@ void GdeEntity::remove_component(const std::string& component_name) {
             component_sparse_sets[type_id].remove(entity_id);
         }
     }
+    GdeSystemManager::mark_components_dirty();
 }
 
+GdeComponent* GdeEntity::get_component(const godot::String& component_name) const {
+    // 将Godot的String转换为std::string
+    godot::CharString cs = component_name.utf8();
+    std::string name(cs.get_data(), cs.length());
+
+    // 加锁保证线程安全
+    std::lock_guard<std::mutex> lock(GdeEntity::component_mutex);
+
+    // 查找组件类型ID
+    auto it = GdeEntity::component_type_ids.find(name);
+    if (it == GdeEntity::component_type_ids.end()) {
+        return nullptr; // 未注册的组件类型
+    }
+
+    int type_id = it->second;
+
+    // 防御性检查稀疏集范围
+    if (type_id < 0 || type_id >= GdeEntity::component_sparse_sets.size()) {
+        return nullptr;
+    }
+
+    // 从稀疏集获取组件
+    return GdeEntity::component_sparse_sets[type_id].get(entity_id);
+}
 
 void GdeEntity::print_entity_id_list() {
 #ifndef DEBUG_DISABLED

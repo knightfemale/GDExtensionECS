@@ -2,14 +2,15 @@ class_name TestSystem
 extends GdeSystem
 
 func _init() -> void:
-	requirements = ["TestComponent", "!GdeComponent"]
+	set_requirements(["TestComponent", "GdeComponent"])
 	pass
 
 
-func  _system_physics_process(components: Dictionary, delta: float) -> void:
-	var test_component = components["TestComponent"]
-	for i in test_component.size():
-		var current_test_component = test_component[i]
+func  _system_physics_process(components: Dictionary, count: int, _delta: float) -> void:
+	var test_components = components["TestComponent"]
+	
+	for i in count:
+		var current_test_component = test_components[i]
 		print(current_test_component.test)
 		pass
 	pass

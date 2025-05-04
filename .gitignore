@@ -1,7 +1,8 @@
-.sconsign.dblite
+*.dblite
 *.obj
-demo/bin/*.dll
-demo/bin/*.exp
-demo/bin/*.lib
-demo/bin/*.exe
+*.dll
+*.exp
+*.lib
+*.exe
 *.bat
+src/gen/

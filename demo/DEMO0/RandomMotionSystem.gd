@@ -17,9 +17,9 @@ const MOVE_SPEED = 200.0
 const DIRECTION_CHANGE_CHANCE = 0.3
 
 
-func _system_process(components: Dictionary, delta: float) -> void:
+func  _system_process(components: Dictionary, count: int, delta: float) -> void:
 	var sprite2d_component = components["Sprite2DComponent"]
-	for i in sprite2d_component.size():
+	for i in count:
 		var current_sprite2d_component = sprite2d_component[i]
 		var sprite2d_node = current_sprite2d_component.sprite2d_node
 		#这里实现sprite2d_component.position随机游走，但position.x不超过1152,position.y不超过648

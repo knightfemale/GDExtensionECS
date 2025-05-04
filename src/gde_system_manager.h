@@ -14,12 +14,16 @@ namespace godot {
     public:
         Array systems;
 
+        static std::mutex components_dirty_mutex;
+        static bool components_dirty;
+        static void mark_components_dirty();
+
         void _ready() override;
         void _process(double delta) override;
         void _physics_process(double delta) override;
 
         Array get_systems();
-        Dictionary get_components_for_system(GdeSystem* system);
+        void update_components(GdeSystem* system);
     };
 
 }

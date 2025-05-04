@@ -2,8 +2,16 @@
 
 using namespace godot;
 
+std::mutex GdeSystemManager::components_dirty_mutex;
+bool GdeSystemManager::components_dirty = false;
+
 void GdeSystemManager::_bind_methods() {
     // 预留方法绑定
+}
+
+void GdeSystemManager::mark_components_dirty() {
+    std::lock_guard<std::mutex> lock(components_dirty_mutex);
+    components_dirty = true;
 }
 
 void GdeSystemManager::_ready() {
@@ -11,12 +19,18 @@ void GdeSystemManager::_ready() {
 }
 
 void GdeSystemManager::_process(double delta) {
+    bool need_update = false;
+    {
+        std::lock_guard<std::mutex> lock(components_dirty_mutex);
+        need_update = components_dirty;
+        components_dirty = false;
+    }
+
     for (int i = 0; i < systems.size(); ++i) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
         if (!system->has_method("_system_process")) continue;
-        Dictionary components = get_components_for_system(system);
-        if (components.is_empty()) continue;
-        system->call("_system_process", components, delta);
+        if (need_update) update_components(system);
+        system->call("_system_process", system->components_dict, system->entity_count, delta);
     }
 }
 
@@ -24,9 +38,7 @@ void GdeSystemManager::_physics_process(double delta) {
     for (int i = 0; i < systems.size(); ++i) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
         if (!system->has_method("_system_physics_process")) continue;
-        Dictionary components = get_components_for_system(system);
-        if (components.is_empty()) continue;
-        system->call("_system_physics_process", components, delta);
+        system->call("_system_physics_process", system->components_dict, system->entity_count, delta);
     }
 }
 
@@ -42,7 +54,8 @@ Array GdeSystemManager::get_systems() {
     return result;
 }
 
-Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
+void GdeSystemManager::update_components(GdeSystem* system) {
+    int entity_count = 0;
     Dictionary components_dict;
 
     // 步骤 1: 直接使用缓存的必须组件和排除组件
@@ -76,6 +89,7 @@ Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
             }
         }
         if (!valid) continue;
+        // 实体有效，计数器递增
 
         // 子步骤 4.2: 检查必须组件, 仅当required非空时执行
         if (!required.empty()) {
@@ -97,6 +111,8 @@ Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
             if (!valid) continue;
         }
 
+        entity_count++;
+
         // 子步骤 4.3: 收集组件到 Dictionary
         for (const std::string& name : required) {
             auto it = GdeEntity::component_type_ids.find(name);
@@ -115,5 +131,7 @@ Dictionary GdeSystemManager::get_components_for_system(GdeSystem* system) {
         }
     }
 
-    return components_dict;
+    // 步骤 5: 将结果存入系统
+    system->entity_count = entity_count;
+    system->components_dict = components_dict;
 }
