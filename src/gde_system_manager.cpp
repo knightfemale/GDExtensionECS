@@ -35,9 +35,17 @@ void GdeSystemManager::_process(double delta) {
 }
 
 void GdeSystemManager::_physics_process(double delta) {
+    bool need_update = false;
+    {
+        std::lock_guard<std::mutex> lock(components_dirty_mutex);
+        need_update = components_dirty;
+        components_dirty = false;
+    }
+
     for (int i = 0; i < systems.size(); ++i) {
         GdeSystem* system = Object::cast_to<GdeSystem>(systems[i]);
         if (!system->has_method("_system_physics_process")) continue;
+        if (need_update) update_components(system);
         system->call("_system_physics_process", system->components_dict, system->entity_count, delta);
     }
 }
