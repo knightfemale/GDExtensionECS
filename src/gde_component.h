@@ -16,11 +16,11 @@ namespace godot {
         void _exit_tree() override;
 
         // 组件名称
-        String component_name = "GdeComponent";
+        String component_name;
         void set_component_name(const String& _component_name);
         String get_component_name() const;
         // 缓存名称(标准字符串, 用于高效查找)
-        std::string cached_component_name;
+        std::string cached_component_name = "GdeComponent";
     };
 
 }

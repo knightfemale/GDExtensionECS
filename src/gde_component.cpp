@@ -10,9 +10,6 @@ void GdeComponent::_bind_methods() {
 
 void GdeComponent::_ready() {
     if (GdeEntity* entity = Object::cast_to<GdeEntity>(get_parent())) {
-        // 缓存组件名称的 std::string 形式，避免频繁转换
-        CharString cs = component_name.utf8();
-        cached_component_name = std::string(cs.get_data(), cs.length());
         // 将组件注册到实体
         entity->add_component(this);
     }
@@ -38,6 +35,9 @@ void GdeComponent::_exit_tree() {
 
 void GdeComponent::set_component_name(const String& _component_name) {
     component_name = _component_name;
+    // 缓存组件名称的 std::string 形式，避免频繁转换
+    CharString cs = _component_name.utf8();
+    cached_component_name = std::string(cs.get_data(), cs.length());
 }
 
 String GdeComponent::get_component_name() const {

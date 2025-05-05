@@ -10,11 +10,8 @@ const MAX_X = 1152
 const MAX_Y = 648
 const MIN_X = 0
 const MIN_Y = 0
-
 # 移动速度参数（像素/秒）
 const MOVE_SPEED = 200.0
-# 每秒改变方向的概率
-const DIRECTION_CHANGE_CHANCE = 0.3
 
 
 func  _system_process(components: Dictionary, count: int, delta: float) -> void:
@@ -34,9 +31,11 @@ func  _system_process(components: Dictionary, count: int, delta: float) -> void:
 		# 反弹处理
 		if new_position.x == MAX_X || new_position.x == MIN_X:
 			current_sprite2d_component.direction.x *= -1
+			pass
 		
 		if new_position.y == MAX_Y || new_position.y == MIN_Y:
 			current_sprite2d_component.direction.y *= -1
+			pass
 		
 		sprite2d_node.position = new_position
 		pass

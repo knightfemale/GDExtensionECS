@@ -3,7 +3,7 @@ extends GdeComponent
 
 
 @onready var sprite2d_node: Sprite2D = $Sprite2D
-var direction := Vector2.RIGHT
+var direction : Vector2
 
 
 func _init() -> void:
