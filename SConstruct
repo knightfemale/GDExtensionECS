@@ -33,14 +33,24 @@ if env["platform"] == "windows":
 else:
     env.Append(CXXFLAGS="-std=c++17 -fPIC")  # 非 Windows 平台添加 -fPIC
 
-# 共享库构建
 if env["platform"] == "macos":
-    # 简化 macOS 库路径（Godot 默认加载 .dylib）
     library = env.SharedLibrary(
-        "demo/bin/libgdexample{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+        "demo/bin/libgdexample.{}.{}.framework/libgdexample.{}.{}".format(
+            env["platform"], env["target"], env["platform"], env["target"]
+        ),
         source=sources,
-        FRAMEWORKPATH=["."]  # 按需保留框架路径
     )
+elif env["platform"] == "ios":
+    if env["ios_simulator"]:
+        library = env.StaticLibrary(
+            "demo/bin/libgdexample.{}.{}.simulator.a".format(env["platform"], env["target"]),
+            source=sources,
+        )
+    else:
+        library = env.StaticLibrary(
+            "demo/bin/libgdexample.{}.{}.a".format(env["platform"], env["target"]),
+            source=sources,
+        )
 else:
     library = env.SharedLibrary(
         "demo/bin/libgdexample{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),

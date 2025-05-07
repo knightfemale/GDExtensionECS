@@ -50,6 +50,55 @@ After compilation is complete, or directly download the Releases file. The  dem
 
 编译完成或者直接下载 Releases 文件，使用 Godot4.4.1 直接打开`demo`文件夹。
 
+Create a Component 创建组件
+
+```gdscript
+class_name TestComponent
+extends GdeComponent
+
+
+func _init() -> void:
+	component_name = "TestComponent"
+	pass
+
+```
+
+Create a System 创建系统
+
+```gdscript
+class_name TestSystem
+extends GdeSystem
+
+func _init() -> void:
+	set_requirements(["TestComponent"])
+	pass
+
+
+func  _system_physics_process(components: Dictionary, count: int, _delta: float) -> void:
+	var test_components = components["TestComponent"]
+
+	for i in count:
+		var current_test_component = test_components[i]
+		pass
+	pass
+
+```
+
+Organize the node tree in the main scene as follows 在主场景以类似下面的方式组织节点树
+
+```
+Main
+┣ SystemManager
+┃ ┣ System1
+┃ ┗ System2
+┣ Entity1
+┃ ┣ Component1
+┃ ┗ Component2
+┗ Entity2
+  ┣ Component1
+  ┗ Component2
+```
+
 #### Thank - you List 感谢名单
 
 玩物不丧志的老李
