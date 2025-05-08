@@ -10,10 +10,6 @@ I initially attempted to integrate existing ECS frameworks like entt and entityx
 
 中间尝试过集成 entt、entityx 等框架，但他们都是根据类型区分不同组件，而在 Godot 编辑器集继承自 Component 基类似乎在 GDExtension 里并不会成为新的类型，因此我从底层重写了一套基于稀疏集的适用于 GDExtension 的这个 ECS 框架。
 
-It seems these component nodes cannot be directly used in Godot C# code?
-
-在 Godot C# 代码里似乎无法直接使用这些节点？
-
 Automatic multithreading will be implemented in the near future.
 
 自动多线程将会在不久的将来实现。
@@ -60,7 +56,6 @@ extends GdeComponent
 func _init() -> void:
 	component_name = "TestComponent"
 	pass
-
 ```
 
 Create a System 创建系统
@@ -68,6 +63,7 @@ Create a System 创建系统
 ```gdscript
 class_name TestSystem
 extends GdeSystem
+
 
 func _init() -> void:
 	set_requirements(["TestComponent"])
@@ -81,22 +77,21 @@ func  _system_physics_process(components: Dictionary, count: int, _delta: float)
 		var current_test_component = test_components[i]
 		pass
 	pass
-
 ```
 
 Organize the node tree in the main scene as follows 在主场景以类似下面的方式组织节点树
 
 ```
 Main
-┣ SystemManager
-┃ ┣ System1
-┃ ┗ System2
-┣ Entity1
-┃ ┣ Component1
-┃ ┗ Component2
-┗ Entity2
-  ┣ Component1
-  ┗ Component2
+├── SystemManager
+│   ├── System1
+│   └── System2
+├── Entity1
+│   ├── Component1
+│   └── Component2
+└── Entity2
+    ├── Component1
+    └── Component2
 ```
 
 #### Thank - you List 感谢名单
