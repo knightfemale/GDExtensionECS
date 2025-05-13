@@ -28,16 +28,37 @@ git clone --recurse-submodules https://github.com/knightfemale/GDExtensionECS.gi
 
 ##### Compile the Project 编译项目
 
+Windows
+
 ```cmd
-# Prepare the compilation environment 准备编译环境
+# Prepare the compilation environment
+# 准备编译环境
+# Install Visual Studio and Aconda (or miniconda)
+# 安装 Visual Studio 和 Aconda（或者miniconda）
 conda create -n your_env_name python=3.11
 conda activate your_env_name
 pip install scons
 
-# Compile the project 编译项目
+# Compile the project
+# 编译项目
 cd path_to_your_project
 scons platform=windows target=template_release
 scons platform=windows target=template_debug
+```
+
+Linux
+
+```bash
+# Prepare the compilation environment
+# 准备编译环境
+sudo apt install scons
+sudo apt install build-essential
+
+# Compile the project
+# 编译项目
+cd path_to_your_project
+scons platform=linux target=template_release
+scons platform=linux target=template_debug
 ```
 
 #### Usage Instructions 使用说明

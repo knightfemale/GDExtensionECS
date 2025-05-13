@@ -1,8 +1,15 @@
 *.dblite
+
 *.obj
+*.lib
 *.dll
 *.exp
-*.lib
+
+*.o
+*.a
+*.so
+
 *.exe
 *.bat
+
 src/gen/
