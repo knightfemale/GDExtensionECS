@@ -4,7 +4,7 @@
         所有组件的基类，定义组件的名称和基础行为。
     </brief_description>
     <description>
-        表示一个 ECS 组件，需作为具体组件的父类。当作为 [GdeEntity] 的子节点时，会自动注册到实体。
+        表示一个组件，需作为具体组件的父类。当作为 [GdeEntity] 的子节点时，会自动注册到实体。
         提供组件名称的属性和生命周期管理（如自动销毁游离组件）。
     </description>
     <methods>

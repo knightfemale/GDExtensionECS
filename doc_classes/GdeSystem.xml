@@ -4,7 +4,7 @@
         ECS 系统基类，定义组件需求和执行逻辑。
     </brief_description>
     <description>
-        系统通过 [code]requirements[/code] 属性筛选实体组件。
+        表示一个系统，通过 [code]requirements[/code] 属性筛选实体组件。
         继承此类并实现 [method _system_process] 或 [method _system_physics_process] 以定义具体逻辑。
     </description>
     
