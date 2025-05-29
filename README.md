@@ -1,5 +1,7 @@
 # GDExtensionECS
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/knightfemale/GDExtensionECS)
+
 #### Introduction 介绍
 
 A minimal-intrusion ECS framework for Godot's native nodes. Due to my limited technical capabilities, this framework currently only supports compositional development and offers very limited performance improvements (in fact, it may even cause performance degradation for simple components). Thus, it primarily serves as a starting point for discussion rather than a complete solution.
